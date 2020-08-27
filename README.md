@@ -1,11 +1,11 @@
 # ClinicManagmentSystemFX
 This is pretty simple project in JAVA, that is representing local clinic managment system. Written in MVC pattern. Connection to the MySQL database. 
 
-#Tech Stack
+# TechStack
 JAVA 13
 Maven
 JavaFX
 MySQL
 
-#Last changes
+# LastChanges
 27.08.2020
