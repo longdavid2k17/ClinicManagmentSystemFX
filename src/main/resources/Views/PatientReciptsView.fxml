@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PatientReciptsController">
+   <children>
+      <Pane layoutX="-7.0" prefHeight="130.0" prefWidth="1307.0" style="-fx-background-color: #C8FC8D;">
+         <children>
+            <Label layoutX="193.0" layoutY="43.0" prefHeight="45.0" prefWidth="300.0" text="Przychodnia SUNSHINE">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="welcomeLabel" layoutX="1157.0" layoutY="54.0" prefHeight="23.0" prefWidth="119.0" text="Twoje recepty">
+               <font>
+                  <Font name="Segoe UI Italic" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="exitBtn" layoutX="1280.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeApp" prefHeight="25.0" prefWidth="25.0">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8_go_back_24px_1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children></Pane>
+      <ScrollPane hbarPolicy="NEVER" layoutX="40.0" layoutY="180.0" prefHeight="351.0" prefWidth="1223.0">
+         <content>
+            <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="1207.0">
+               <placeholder>
+                  <Label text="Nie ma wyników dla zapytania" />
+               </placeholder>
+              <columns>
+                <TableColumn fx:id="date" prefWidth="174.0" text="Data wystawienia" />
+                <TableColumn fx:id="doctor" minWidth="0.0" prefWidth="223.0" text="Lekarz wystawiający" />
+                  <TableColumn fx:id="medicineName" prefWidth="330.0" text="Nazwa leku" />
+                  <TableColumn fx:id="description" prefWidth="478.0" text="Dawkowanie/Informacje" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

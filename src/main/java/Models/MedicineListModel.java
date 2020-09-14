@@ -44,6 +44,8 @@ public class MedicineListModel
         }
     }
 
+
+
     public int getListLenght()
     {
         return listLenght;
@@ -52,6 +54,11 @@ public class MedicineListModel
     public String getMedicine(int id)
     {
         return medicineList.get(id).toString();
+    }
+
+    public List<MedicineModel> getList()
+    {
+        return medicineList;
     }
 
     public double getMedicinePrice(int id)

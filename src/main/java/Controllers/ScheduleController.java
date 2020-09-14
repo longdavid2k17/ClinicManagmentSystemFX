@@ -4,7 +4,6 @@ import ConnectionPackage.Connector;
 import Models.DoctorModel;
 import Models.DoctorsListModel;
 import Models.SimpleVisit;
-import Models.VisitModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -52,11 +51,12 @@ public class ScheduleController
     private String nickname;
     private List<SimpleVisit> visitsList;
     private DoctorsListModel doctorsListModel;
-    private DoctorModel doctor;
 
 
     public void init(String nickname,int doctor_id)
     {
+        datePickerFrom.setValue(null);
+        datePickerTo.setValue(null);
         setNickname(nickname);
         setDoctor_id(doctor_id);
         welcomeLabel.setText("Terminarz dla: "+getNickname());
@@ -140,120 +140,125 @@ public class ScheduleController
 
     public void search(ActionEvent actionEvent)
     {
-        boolean isSetFrom = false;
-        boolean isSetTo = false;
-        boolean isSetPatient = false;
-        String patientName="";
-        String patientSurname="";
-        String query = "";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String dateFromString="";
-        String dateToString="";
+        if(patientNameBox.getValue() == null && datePickerFrom.getValue()==null && datePickerTo.getValue()==null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd!");
+            alert.setHeaderText("Nie ustawiono żadnych filtrów");
+            alert.setContentText("Wybierz jakikolwiek filtr i spróbuj ponownie");
+            alert.showAndWait();
+        }
+        else
+        {
+            boolean isSetFrom = false;
+            boolean isSetTo = false;
+            boolean isSetPatient = false;
+            String patientName="";
+            String patientSurname="";
+            String query = "";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFromString="";
+            String dateToString="";
 
-        if(patientNameBox.getValue() != null)
-        {
-            String[] patientNameParts = patientNameBox.getValue().split(" ");
-            patientName = patientNameParts[0];
-            patientSurname = patientNameParts[1];
-            isSetPatient = true;
+            if(patientNameBox.getValue() != null)
+            {
+                String[] patientNameParts = patientNameBox.getValue().split(" ");
+                patientName = patientNameParts[0];
+                patientSurname = patientNameParts[1];
+                isSetPatient = true;
+                System.out.println("WARTOŚĆ PACJENTA "+patientNameBox.getValue());
+            }
+
+            if(datePickerFrom.getValue() != null)
+            {
+                LocalDate localDateFrom = datePickerFrom.getValue();
+                Instant instantFrom = Instant.from(localDateFrom.atStartOfDay(ZoneId.systemDefault()));
+                Date dateFrom = Date.from(instantFrom);
+                dateFromString = format.format( dateFrom);
+                isSetFrom = true;
+            }
+            if(datePickerTo.getValue() != null)
+            {
+                LocalDate localDateTo = datePickerTo.getValue();
+                Instant instantTo = Instant.from(localDateTo.atStartOfDay(ZoneId.systemDefault()));
+                Date dateTo = Date.from(instantTo);
+                dateToString = format.format( dateTo);
+                isSetTo = true;
+            }
+
+            if(isSetFrom && isSetTo)
+            {
+                if(isSetPatient)
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
+                            "WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"' AND private_data.surname='"+patientSurname+"' AND visits.visit_date >= '"+dateFromString+"' AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+                else
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
+                            "WHERE visits.patient_id=private_data.user_id  AND visits.visit_date >= '"+dateFromString+"' AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+            }
+            else if(isSetFrom && isSetTo==false)
+            {
+                if(isSetPatient)
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
+                            "WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"' AND private_data.surname='"+patientSurname+"' AND visits.visit_date >= '"+dateFromString+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+                else
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
+                            "WHERE visits.patient_id=private_data.user_id  AND visits.visit_date >= '"+dateFromString+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+            }
+            else if(isSetFrom==false && isSetTo)
+            {
+                if(isSetPatient)
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
+                            "WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"' AND private_data.surname='"+patientSurname+"' AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+                else
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
+                            "WHERE visits.patient_id=private_data.user_id AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+            }
+            else if(isSetFrom==false && isSetTo==false)
+            {
+                if(isSetPatient)
+                {
+                    query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"'" +
+                            " AND private_data.surname='"+patientSurname+"' AND visits.doctor_id="+getDoctor_id()+";";
+                }
+            }
+
+            clearLists();
+            System.out.println(query);
+            try
+            {
+                PreparedStatement selectFilteredVisits = Connector.getConnection().prepareStatement(query);
+                ResultSet resultFilteredVisits = selectFilteredVisits.executeQuery();
+                while(resultFilteredVisits.next())
+                {
+                    String fullName = resultFilteredVisits.getString(1)+" "+resultFilteredVisits.getString(2);
+                    Date tempDate = resultFilteredVisits.getDate(3);
+                    String desc = resultFilteredVisits.getString(4);
+                    visitsList.add(new SimpleVisit(fullName,tempDate,desc));
+                }
+                System.out.println("Ilość końcowa nowej listy "+getVisitsList().size());
+                for(int i=0;i<getVisitsList().size();i++)
+                {
+                    table.getItems().add(getVisitsList().get(i));
+                }
+            }
+            catch (SQLException e)
+            {
+                System.out.println(e.getMessage()+"\n"+e.getErrorCode()+"\n"+e.getCause());
+            }
         }
 
-        if(datePickerFrom.getValue() != null)
-        {
-            LocalDate localDateFrom = datePickerFrom.getValue();
-            Instant instantFrom = Instant.from(localDateFrom.atStartOfDay(ZoneId.systemDefault()));
-            Date dateFrom = Date.from(instantFrom);
-            dateFromString = format.format( dateFrom);
-            isSetFrom = true;
-        }
-        if(datePickerTo.getValue() != null)
-        {
-            LocalDate localDateTo = datePickerTo.getValue();
-            Instant instantTo = Instant.from(localDateTo.atStartOfDay(ZoneId.systemDefault()));
-            Date dateTo = Date.from(instantTo);
-            dateToString = format.format( dateTo);
-            isSetTo = true;
-        }
-
-        if(isSetFrom && isSetTo)
-        {
-            if(isSetPatient)
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
-                        "WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"' AND private_data.surname='"+patientSurname+"' AND visits.visit_date >= '"+dateFromString+"' AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-            else
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
-                        "WHERE visits.patient_id=private_data.user_id  AND visits.visit_date >= '"+dateFromString+"' AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-        }
-        else if(isSetFrom && isSetTo==false)
-        {
-            if(isSetPatient)
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
-                        "WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"' AND private_data.surname='"+patientSurname+"' AND visits.visit_date >= '"+dateFromString+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-            else
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
-                        "WHERE visits.patient_id=private_data.user_id  AND visits.visit_date >= '"+dateFromString+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-        }
-        else if(isSetFrom==false && isSetTo)
-        {
-            if(isSetPatient)
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
-                        "WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"' AND private_data.surname='"+patientSurname+"' AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-            else
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id " +
-                        "WHERE visits.patient_id=private_data.user_id AND visits.visit_date <='"+dateToString+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-        }
-        else if(isSetFrom==false && isSetTo==false)
-        {
-            if(isSetPatient)
-            {
-                query = "SELECT private_data.name, private_data.surname, visits.visit_date,visits.description FROM private_data INNER JOIN visits ON visits.patient_id = private_data.user_id WHERE visits.patient_id=private_data.user_id AND private_data.name='"+patientName+"'" +
-                        " AND private_data.name='"+patientSurname+"' AND visits.doctor_id="+getDoctor_id()+";";
-            }
-            else
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Błąd!");
-                alert.setHeaderText("Nie ustawiono żadnych filtrów");
-                alert.setContentText("Wybierz jakikolwiek filtr i spróbuj ponownie");
-                alert.showAndWait();
-            }
-        }
-
-        clearLists();
-
-        try
-        {
-            PreparedStatement selectFilteredVisits = Connector.getConnection().prepareStatement(query);
-            ResultSet resultFilteredVisits = selectFilteredVisits.executeQuery();
-            while(resultFilteredVisits.next())
-            {
-                String fullName = resultFilteredVisits.getString(1)+" "+resultFilteredVisits.getString(2);
-                Date tempDate = resultFilteredVisits.getDate(3);
-                String desc = resultFilteredVisits.getString(4);
-                visitsList.add(new SimpleVisit(fullName,tempDate,desc));
-            }
-            System.out.println("Ilość końcowa nowej listy "+getVisitsList().size());
-            for(int i=0;i<getVisitsList().size();i++)
-            {
-                table.getItems().add(getVisitsList().get(i));
-            }
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getMessage()+"\n"+e.getErrorCode()+"\n"+e.getCause());
-        }
 
     }
 
@@ -266,8 +271,8 @@ public class ScheduleController
     public void clearFilters(ActionEvent actionEvent)
     {
         patientNameBox.getSelectionModel().clearSelection();
-        datePickerFrom.getEditor().clear();
-        datePickerTo.getEditor().clear();
+        datePickerFrom.setValue(null);
+        datePickerTo.setValue(null);
         init(getNickname(),getDoctor_id());
     }
 }

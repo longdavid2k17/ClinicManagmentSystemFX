@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PatientController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PatientController">
    <children>
       <Pane layoutX="-7.0" prefHeight="130.0" prefWidth="1307.0" style="-fx-background-color: #C8FC8D;">
          <children>
@@ -40,7 +40,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="newVisitBtn" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClicks" prefHeight="154.0" prefWidth="280.0" text="Umów wizytę">
+            <Button fx:id="newVisitBtn" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClicks" prefHeight="154.0" prefWidth="280.0" text="Poproś o wizytę">
                <graphic>
                   <ImageView fitHeight="88.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -48,7 +48,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="reciptBtn" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClicks" prefHeight="165.0" prefWidth="280.0" text="Recepty" GridPane.columnIndex="1">
+            <Button fx:id="reciptBtn" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleClicks" prefHeight="165.0" prefWidth="280.0" text="Moje recepty" GridPane.columnIndex="1">
                <graphic>
                   <ImageView fitHeight="92.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
                      <image>

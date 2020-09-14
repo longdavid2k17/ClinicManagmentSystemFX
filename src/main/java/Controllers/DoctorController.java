@@ -1,6 +1,8 @@
 package Controllers;
 
+import ConnectionPackage.Connector;
 import Models.DoctorModel;
+import Models.MedicineModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,15 +12,23 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DoctorController
 {
     @FXML
     private Button newVisitBtn;
+
+    @FXML
+    private ImageView messageImage;
 
     @FXML
     private Button reciptBtn;
@@ -48,6 +58,8 @@ public class DoctorController
         doctor = new DoctorModel(id_user);
         setNickname(nickname);
         updateWindow();
+        // TODO wrzucić metodę areNewMessages do wątku który będzie ją wykonywał co 30 sekund
+        areNewMessages();
     }
 
     void updateWindow()
@@ -145,32 +157,105 @@ public class DoctorController
 
         if(actionEvent.getSource() == ilnessDbBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Baza chorób i dolegliwości");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/IllnessBaseView.fxml"));
+                Parent sceneMain = loader.load();
+                IllnessBaseController controller = loader.<IllnessBaseController>getController();
+                controller.init();
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         if(actionEvent.getSource() == medicinesBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Baza leków");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/MedicinesBaseView.fxml"));
+                Parent sceneMain = loader.load();
+                MedicinesBaseController controller = loader.<MedicinesBaseController>getController();
+                controller.init();
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         if(actionEvent.getSource() == patientsDataBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Dane pacjentów");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/PatientsBaseView.fxml"));
+                Parent sceneMain = loader.load();
+                PatientBaseController controller = loader.<PatientBaseController>getController();
+                controller.init();
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void areNewMessages()
+    {
+        String query = "SELECT * FROM messages WHERE doctor_id="+doctor.getDoctor_id()+" AND readed=0";
+        File file = null;
+
+        try
+        {
+            PreparedStatement selectMessages = Connector.getConnection().prepareStatement(query);
+            ResultSet result = selectMessages.executeQuery();
+            if(result.next())
+            {
+                file = new File("src/main/resources/Icons/icons8_new_message_24px.png");
+                Image image = new Image(file.toURI().toString());
+                messageImage.setImage(image);
+            }
+            else
+            {
+                if(result.next())
+                {
+                    file = new File("src/main/resources/Icons/icons8_group_message_24px.png");
+                    Image image = new Image(file.toURI().toString());
+                    messageImage.setImage(image);
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage()+"\n"+e.getErrorCode()+"\n"+e.getCause());
         }
     }
 

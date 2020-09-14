@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PatientPreviewController">
+   <children>
+      <AnchorPane prefHeight="144.0" prefWidth="1200.0" style="-fx-background-color: #C8FC8D;">
+         <children>
+            <ImageView fitHeight="135.0" fitWidth="135.0" layoutX="75.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/icon.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="229.0" layoutY="26.0" text="Klinika SUNSHINE">
+               <font>
+                  <Font name="Segoe UI Bold" size="30.0" />
+               </font></Label>
+            <Label fx:id="titleLabel" layoutX="229.0" layoutY="72.0" text="Pacjent o id ">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="exitBtn" contentDisplay="TOP" layoutX="1172.0" layoutY="3.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeFrame" prefHeight="25.0" prefWidth="25.0">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8_go_back_24px_1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children></AnchorPane>
+      <AnchorPane layoutY="144.0" prefHeight="556.0" prefWidth="1200.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <Label layoutX="23.0" layoutY="60.0" text="Login użytkownika" />
+            <TextField fx:id="loginField" editable="false" layoutX="23.0" layoutY="80.0" prefHeight="25.0" prefWidth="149.0" promptText="Login" />
+            <Label layoutX="130.0" layoutY="12.0" text="Podstawowe dane">
+               <font>
+                  <Font name="Segoe UI Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="23.0" layoutY="110.0" text="Imię" />
+            <Label layoutX="23.0" layoutY="165.0" text="Nazwisko" />
+            <Label layoutX="23.0" layoutY="220.0" text="Numer PESEL" />
+            <Label layoutX="23.0" layoutY="280.0" text="Numer telefonu" />
+            <TextField fx:id="nameField" editable="false" layoutX="23.0" layoutY="130.0" promptText="Imię" />
+            <TextField fx:id="surnameField" editable="false" layoutX="23.0" layoutY="185.0" promptText="Nazwisko" />
+            <TextField fx:id="peselField" editable="false" layoutX="23.0" layoutY="245.0" promptText="00000000000" />
+            <TextField fx:id="phoneNbrField" editable="false" layoutX="23.0" layoutY="300.0" promptText="000000000" />
+            <Label layoutX="200.0" layoutY="60.0" text="Ulica" />
+            <Label layoutX="200.0" layoutY="110.0" text="Kod pocztowy" />
+            <Label layoutX="200.0" layoutY="165.0" text="Miejscowość" />
+            <TextField fx:id="streetField" editable="false" layoutX="200.0" layoutY="80.0" promptText="np. Sobieskiego 1/22" />
+            <TextField fx:id="zipCodeField" editable="false" layoutX="200.0" layoutY="130.0" promptText="00-000" />
+            <TextField fx:id="cityField" editable="false" layoutX="200.0" layoutY="185.0" promptText="Miejscowość" />
+            <Line endX="-79.0" endY="454.0" layoutX="500.0" layoutY="22.0" opacity="0.5" startX="-79.0" startY="-8.0" />
+            <Label layoutX="520.0" layoutY="12.0" text="Wartości ciała pacjenta">
+               <font>
+                  <Font name="Segoe UI Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="450.0" layoutY="60.0" text="Wzrost (cm)" />
+            <Label layoutX="450.0" layoutY="165.0" text="Waga (kg)" />
+            <Label layoutX="450.0" layoutY="110.0" text="Płeć" />
+            <TextField fx:id="growthField" editable="false" layoutX="450.0" layoutY="80.0" promptText="np. 175" />
+            <TextField fx:id="weightField" editable="false" layoutX="450.0" layoutY="185.0" promptText="np. 60.1" />
+            <ImageView fitHeight="233.0" fitWidth="267.0" layoutX="920.0" layoutY="237.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/icon.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="sexField" editable="false" layoutX="450.0" layoutY="130.0" />
+            <Label layoutX="450.0" layoutY="220.0" text="BMI" />
+            <TextField fx:id="bmiField" editable="false" layoutX="450.0" layoutY="245.0" />
+            <Line endX="-79.0" endY="454.0" layoutX="820.0" layoutY="22.0" opacity="0.51" startX="-79.0" startY="-8.0" />
+            <TableView fx:id="table" layoutX="770.0" layoutY="65.0" prefHeight="402.0" prefWidth="406.0">
+               <placeholder>
+                  <Label text="Nie ma wyników dla zapytania" />
+               </placeholder>
+              <columns>
+                <TableColumn fx:id="fullNameDoctorColumn" prefWidth="139.0" text="Imie i nazwisko lekarza" />
+                <TableColumn fx:id="visitDateColumn" prefWidth="94.0" text="Data wizyty" />
+                  <TableColumn fx:id="descriptionColumn" prefWidth="172.0" text="Powód" />
+              </columns>
+            </TableView>
+            <Label layoutX="950.0" layoutY="13.0" text="Historia wizyt">
+               <font>
+                  <Font name="Segoe UI Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

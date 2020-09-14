@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="650.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.NewVisitFormController">
+   <children>
+      <AnchorPane prefHeight="650.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <AnchorPane layoutY="155.0" prefHeight="498.0" prefWidth="550.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <ImageView disable="true" fitHeight="143.0" fitWidth="250.0" layoutX="340.0" layoutY="340.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.33" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icon.png" />
+                     </image>
+                  </ImageView>
+                  <ScrollPane hbarPolicy="NEVER" layoutX="18.0" layoutY="49.0" prefHeight="274.0" prefWidth="520.0" vbarPolicy="ALWAYS">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <TableView prefHeight="274.0" prefWidth="523.0">
+                                  <Label>Nie ma wiadomośći</Label>
+                                <columns>
+                                  <TableColumn prefWidth="145.0" text="Imię i nazwisko pacjenta" />
+                                  <TableColumn prefWidth="113.0" text="Preferowana data" />
+                                    <TableColumn prefWidth="182.0" text="Wiadomość" />
+                                    <TableColumn prefWidth="66.0" text="Status" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="155.0" prefWidth="550.0" style="-fx-background-color: #C8FC8D;">
+         <children>
+            <Button fx:id="closeBtn" contentDisplay="TOP" layoutX="520.0" layoutY="2.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeFrame" prefHeight="23.0" prefWidth="23.0">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/close_image_25.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="29.0" layoutY="54.0" text="Twoje wiadomości">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

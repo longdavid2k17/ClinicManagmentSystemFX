@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1300.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MedicinesBaseController">
+   <children>
+      <Pane layoutX="-7.0" prefHeight="130.0" prefWidth="1307.0" style="-fx-background-color: #C8FC8D;">
+         <children>
+            <Label layoutX="193.0" layoutY="43.0" prefHeight="45.0" prefWidth="300.0" text="Przychodnia SUNSHINE">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="welcomeLabel" layoutX="1108.0" layoutY="54.0" prefHeight="23.0" prefWidth="168.0" text="Baza lekarstw">
+               <font>
+                  <Font name="Segoe UI Italic" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="exitBtn" layoutX="1280.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeFrame" prefHeight="25.0" prefWidth="25.0">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icons8_go_back_24px_1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children></Pane>
+      <ScrollPane hbarPolicy="NEVER" layoutX="40.0" layoutY="180.0" prefHeight="351.0" prefWidth="978.0">
+         <content>
+            <TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="980.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="90.0" text="ID" />
+                  <TableColumn fx:id="nameColumn" prefWidth="390.0" text="Nazwa" />
+                <TableColumn fx:id="capacityColumn" minWidth="0.0" prefWidth="377.0" text="Ilość w opakowaniu" />
+                  <TableColumn fx:id="priceColumn" prefWidth="107.0" text="Cena" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <Line endX="-100.0" endY="399.0" layoutX="1143.0" layoutY="149.0" opacity="0.45" startX="-100.0" startY="26.0" />
+      <Label layoutX="1150.0" layoutY="148.0" text="Filtruj">
+         <font>
+            <Font name="Segoe UI Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="searchBtn" layoutX="1084.0" layoutY="400.0" mnemonicParsing="false" onAction="#search" text="Szukaj">
+         <font>
+            <Font name="Segoe UI Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="clearBtn" layoutX="1187.0" layoutY="400.0" mnemonicParsing="false" onAction="#clearFilters" text="Usuń filtry">
+         <font>
+            <Font name="Segoe UI Bold" size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="priceFromField" layoutX="1075.0" layoutY="199.0" prefHeight="25.0" prefWidth="100.0" promptText="Cena od" />
+      <TextField fx:id="priceToField" layoutX="1075.0" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Cena do" />
+   </children>
+</AnchorPane>

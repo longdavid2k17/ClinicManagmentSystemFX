@@ -84,5 +84,9 @@ public class DoctorsListModel
         {
             e.printStackTrace();
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

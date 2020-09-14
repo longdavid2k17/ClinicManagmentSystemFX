@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="650.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SendVisitRequestController">
+   <children>
+      <AnchorPane prefHeight="650.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <AnchorPane prefHeight="155.0" prefWidth="406.0" style="-fx-background-color: #C8FC8D;">
+               <children>
+                  <Button fx:id="closeBtn" contentDisplay="TOP" layoutX="380.0" layoutY="2.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeFrame" prefHeight="23.0" prefWidth="23.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/close_image_25.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label layoutX="29.0" layoutY="54.0" text="Poproś o wizytę">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+            <AnchorPane layoutY="155.0" prefHeight="498.0" prefWidth="406.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Button fx:id="sendBtn" layoutX="302.0" layoutY="459.0" mnemonicParsing="false" onAction="#send" prefHeight="25.0" prefWidth="90.0" text="Wyślij">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font></Button>
+                  <Label layoutX="14.0" layoutY="27.0" prefHeight="17.0" prefWidth="138.0" text="Imię i nazwisko pacjenta">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="231.0" text="Opis">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ImageView disable="true" fitHeight="218.0" fitWidth="253.0" layoutX="175.0" layoutY="220.0" nodeOrientation="RIGHT_TO_LEFT" opacity="0.33" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/icon.png" />
+                     </image>
+                  </ImageView>
+                  <TextArea fx:id="messeageArea" layoutX="14.0" layoutY="249.0" opacity="0.5" prefHeight="88.0" prefWidth="270.0" wrapText="true" />
+                  <TextField fx:id="patientNameField" editable="false" layoutX="14.0" layoutY="53.0" />
+                  <Label layoutX="14.0" layoutY="89.0" prefHeight="17.0" prefWidth="103.0" text="Wybierz lekarza">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font></Label>
+                  <ChoiceBox fx:id="doctorBox" layoutX="14.0" layoutY="115.0" prefWidth="150.0" />
+                  <Label layoutX="14.0" layoutY="151.0" text="Preferowana data" />
+                  <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="180.0" />
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

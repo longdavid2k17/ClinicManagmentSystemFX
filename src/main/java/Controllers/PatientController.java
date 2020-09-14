@@ -3,9 +3,17 @@ package Controllers;
 import Models.PatientModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
 
 public class PatientController
 {
@@ -34,9 +42,21 @@ public class PatientController
 
     void initVariables(String nickname, int id_user)
     {
-        patient = new PatientModel(id_user);
+        try
+        {
+            patient = new PatientModel(id_user);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         setNickname(nickname);
         updateWindow();
+    }
+
+    public PatientModel getPatient()
+    {
+        return patient;
     }
 
     void updateWindow()
@@ -58,52 +78,123 @@ public class PatientController
     {
         if(actionEvent.getSource() == newVisitBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nowa wizyta!");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/SendMeetingRequestView.fxml"));
+                Parent sceneMain = loader.load();
+                SendVisitRequestController controller = loader.<SendVisitRequestController>getController();
+                controller.init(patient);
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         if(actionEvent.getSource() == reciptBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Wystawione recepty");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/PatientReciptsView.fxml"));
+                Parent sceneMain = loader.load();
+                PatientReciptsController controller = loader.<PatientReciptsController>getController();
+                controller.init(patient);
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         if(actionEvent.getSource() == oldVisitBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Historia wizyt");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/PatientScheduleView.fxml"));
+                Parent sceneMain = loader.load();
+                PatientScheduleController controller = loader.<PatientScheduleController>getController();
+                controller.init(patient.getPatient_id());
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         if(actionEvent.getSource() == ilnessDbBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Baza chorób i dolegliwości");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/IllnessBaseView.fxml"));
+                Parent sceneMain = loader.load();
+                IllnessBaseController controller = loader.<IllnessBaseController>getController();
+                controller.init();
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         if(actionEvent.getSource() == yourDataBtn)
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Twoje dane osobowe");
-            alert.setHeaderText("AAAA!");
-            alert.setContentText("BBBBBBBBB!");
+            System.out.println(getPatient().toString());
+            try
+            {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Views/PatientPreviewView.fxml"));
+                Parent sceneMain = loader.load();
+                PatientPreviewController controller = loader.<PatientPreviewController>getController();
+                controller.init(getPatient());
 
-            alert.showAndWait();
+                Image icon = new Image(getClass().getResourceAsStream("/Icons/app_icon.png"));
+
+                Scene scene = new Scene(sceneMain);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.getIcons().add(icon);
+                stage.show();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
