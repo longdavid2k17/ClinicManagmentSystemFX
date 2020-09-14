@@ -7,5 +7,11 @@ Maven,
 JavaFX,
 MySQL
 
+# How to run
+
+# How it works
+
+
+
 # LastChanges
-27.08.2020
+14.09.2020
