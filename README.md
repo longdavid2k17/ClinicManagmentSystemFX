@@ -1,5 +1,6 @@
 # ClinicManagmentSystemFX
 This is pretty simple project in JAVA, that is representing local clinic managment system. Written in MVC pattern. Connection to the MySQL database. 
+Warning - software is not localized (just polish language!)
 
 # TechStack
 JAVA 13,
@@ -10,6 +11,7 @@ MySQL
 # How to run
 That is simple, just open project in IDE and click run ;)
 Or ofcourse open jar file.
+Put AdminPanel into your WWW server directory to have access from your browser.
 But remember - to work properly, app needs working database. In directory DB, I put MySQL database file, with some example data to work with. You can delete them and write your own or work with those included. If you need, just import database on some hosting or DB server - then just edit connection class with correct connection data.
 
 # How it works
